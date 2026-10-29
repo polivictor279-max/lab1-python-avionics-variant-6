@@ -16,7 +16,7 @@ def select_nav_source(gps_avail: bool, gps_acc: float, ins_calib: bool) -> str:
 # Задача 2: Аналіз температурних зон супутника (match-case)
 def check_temp_zone(zone_data: list) -> str:
     match zone_data:
-        case [zone_name, [temp1, temp2, temp3]] if zone_name == "ENGINE" and sum([temp1, temp2, temp3])/3 > 100:
+        case [zone_name, [temp1, temp2, temp3]] if zone_name == "ENGINE" and (temp1 + temp2 + temp3)/3 > 100:
             return "Перегрів двигуна"
         case [zone_name, *_]:
             return f"Зона {zone_name} в нормі"
@@ -48,20 +48,20 @@ print(f"Input: gps_avail = True, gps_acc = 7.34, ins_calib = False ==> select_na
 print()
 
 # Тести для задачі 2
-print(f"Input: ['ENGINE', [140, 80, 200.5]] ==> select_nav_source = {check_temp_zone(["ENGINE", [140, 80, 200.5]])}")
-print(f"Input: ['Light', [140, 80, 200.5]] ==> select_nav_source = {check_temp_zone(['Light', [140, 80, 200.5]])}")
-print(f"Input: ['ENGINE', [140, ]] ==> select_nav_source = {check_temp_zone(["ENGINE", [140, 200]])}")
-print(f"Input: [] ==> select_nav_source = {check_temp_zone([])}")
+print(f"Input: ['ENGINE', [140, 80, 200.5]] ==> check_temp_zone = {check_temp_zone(['ENGINE', [140, 80, 200.5]])}")
+print(f"Input: ['Light', [140, 80, 200.5]] ==> check_temp_zone = {check_temp_zone(['Light', [140, 80, 200.5]])}")
+print(f"Input: ['ENGINE', [140, ]] ==> check_temp_zone = {check_temp_zone(["ENGINE", [140, 200]])}")
+print(f"Input: [] ==> check_temp_zone = {check_temp_zone([])}")
 print()
 
 # Тести для задачі 3
-print(f"Input: [12, 120, 200, 341, 400, 645] ==> select_nav_source = {find_supersonic_second([12, 120, 200, 341, 400])}")
-print(f"Input: [12, 120, 200, 231, 300, 320] ==> select_nav_source = {find_supersonic_second([12, 120, 200, 231, 300, 320])}")
-print(f"Input: [] ==> select_nav_source = {find_supersonic_second([])}")
+print(f"Input: [12, 120, 200, 341, 400, 645] ==> find_supersonic_second = {find_supersonic_second([12, 120, 200, 341, 400])}")
+print(f"Input: [12, 120, 200, 231, 300, 320] ==> find_supersonic_second = {find_supersonic_second([12, 120, 200, 231, 300, 320])}")
+print(f"Input: [] ==> find_supersonic_second = {find_supersonic_second([])}")
 print()
 
 # Тести для задачі 4
-print(f"Input: [1, 2, 3, 4, 5, 6, 7, 8] ==> select_nav_source = {downsample_telemetry([1, 2, 3, 4, 5, 6, 7, 8])}")
-print(f"Input: [{list(range(16))}] ==> select_nav_source = {downsample_telemetry(list(range(30)))}")
-print(f"Input: [] ==> select_nav_source = {downsample_telemetry([])}")
+print(f"Input: [1, 2, 3, 4, 5, 6, 7, 8] ==> downsample_telemetry = {downsample_telemetry([1, 2, 3, 4, 5, 6, 7, 8])}")
+print(f"Input: [{list(range(16))}] ==> downsample_telemetry = {downsample_telemetry(list(range(16)))}")
+print(f"Input: [] ==> downsample_telemetry = {downsample_telemetry([])}")
 print()
