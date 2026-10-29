@@ -35,10 +35,10 @@ def find_supersonic_second(speeds: list) -> int | None:
 
 # Задача 4: Зменшення частоти дискретизації (range)
 def downsample_telemetry(data: list) -> list:
-    """
-    За допомогою range з кроком 3 відбирає кожен 3-й елемент списку data.
-    """
-    ...
+    downsampled_data = []
+    for i in range(0, len(data), 3):
+        downsampled_data.append(data[i])
+    return downsampled_data
 
 # Тести для задачі 1
 print(f"Input: gps_avail = True, gps_acc = 4, ins_calib = False ==> select_nav_source = {select_nav_source(True, 4, False)}")
@@ -61,3 +61,7 @@ print(f"Input: [] ==> select_nav_source = {find_supersonic_second([])}")
 print()
 
 # Тести для задачі 4
+print(f"Input: [1, 2, 3, 4, 5, 6, 7, 8] ==> select_nav_source = {downsample_telemetry([1, 2, 3, 4, 5, 6, 7, 8])}")
+print(f"Input: [{list(range(16))}] ==> select_nav_source = {downsample_telemetry(list(range(30)))}")
+print(f"Input: [] ==> select_nav_source = {downsample_telemetry([])}")
+print()
