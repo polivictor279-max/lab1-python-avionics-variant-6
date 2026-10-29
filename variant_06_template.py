@@ -15,12 +15,13 @@ def select_nav_source(gps_avail: bool, gps_acc: float, ins_calib: bool) -> str:
 
 # Задача 2: Аналіз температурних зон супутника (match-case)
 def check_temp_zone(zone_data: list) -> str:
-    """
-    Приймає [zone_name, [t1, t2, t3]].
-    - zone_name == "ENGINE" та середнє(t1,t2,t3) > 100 -> "Перегрів двигуна"
-    - будь-яка інша зона -> "Зона {zone_name} в нормі"
-    """
-    ...
+    match zone_data:
+        case [zone_name, [temp1, temp2, temp3]] if zone_name == "ENGINE" and sum([temp1, temp2, temp3])/3 > 100:
+            return "Перегрів двигуна"
+        case [zone_name, *_]:
+            return f"Зона {zone_name} в нормі"
+        case _:
+            return 'INVALID INPUT'
 
 # Задача 3: Пошук подолання швидкості звуку (for / break)
 def find_supersonic_second(speeds: list) -> int | None:
@@ -36,3 +37,20 @@ def downsample_telemetry(data: list) -> list:
     За допомогою range з кроком 3 відбирає кожен 3-й елемент списку data.
     """
     ...
+
+# Тести для задачі 1
+print(f"Input: gps_avail = True, gps_acc = 4, ins_calib = False ==> select_nav_source = {select_nav_source(True, 4, False)}")
+print(f"Input: gps_avail = False, gps_acc = 4.5, ins_calib = False ==> select_nav_source = {select_nav_source(False, 4, False)}")
+print(f"Input: gps_avail = True, gps_acc = 7, ins_calib = True ==> select_nav_source = {select_nav_source(True, 7, True)}")
+print(f"Input: gps_avail = True, gps_acc = 7.34, ins_calib = False ==> select_nav_source = {select_nav_source(True, 7, False)}")
+print('\n')
+
+# Тести для задачі 2
+print(f"Input: ['ENGINE', [140, 80, 200.5]] ==> select_nav_source = {check_temp_zone(["ENGINE", [140, 80, 200.5]])}")
+print(f"Input: ['Light', [140, 80, 200.5]] ==> select_nav_source = {check_temp_zone(['Light', [140, 80, 200.5]])}")
+print(f"Input: ['ENGINE', [140, ]] ==> select_nav_source = {check_temp_zone(["ENGINE", [140, 200]])}")
+print(f"Input: [] ==> select_nav_source = {check_temp_zone([])}")
+
+# Тести для задачі 3
+
+# Тести для задачі 4
