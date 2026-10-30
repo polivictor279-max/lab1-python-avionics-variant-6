@@ -6,8 +6,13 @@
 
 # Задача 1: Вибір джерела навігації (if/elif/else)
 def select_nav_source(gps_avail: bool, gps_acc: float, ins_calib: bool) -> str:
-    if gps_avail and gps_acc < 5.0:
-        return "GPS"
+    if gps_avail:
+        if gps_acc < 5.0:
+            return "GPS"
+        elif ins_calib: 
+            return "INS"
+        else: 
+            return "Star Tracker"
     elif ins_calib: 
         return "INS"
     else: 
